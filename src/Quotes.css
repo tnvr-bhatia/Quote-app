@@ -1,0 +1,25 @@
+.button {
+  height: 38px;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  background-color: #333;
+  outline: none;
+  font-size: 0.9em;
+  padding: 8px 18px 6px 18px;
+  margin-top: 30px;
+  opacity: 1;
+  cursor: pointer;
+  font-family: "Aleo", serif;
+}
+.button:hover {
+  opacity: 0.9;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
