@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Quotes.css";
+import Loader from "./Loader";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 var xhr;
 
@@ -8,6 +10,7 @@ class Quotes extends Component {
     super(props, context);
 
     this.state = {
+      isLoading: false,
       quoteText: "We make our own fortunes and we call them fate.",
       quoteAuthor: "Benjamin Disraeli",
       color: "#73a857"
@@ -22,6 +25,7 @@ class Quotes extends Component {
   }
 
   generateQuote() {
+    this.setState({ isLoading: true });
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
@@ -63,7 +67,8 @@ class Quotes extends Component {
       this.setState({
         quoteText: response.quoteText.replace(/"/g, "'"),
         quoteAuthor: response.quoteAuthor || "Unknown",
-        color: bgcolor
+        color: bgcolor,
+        isLoading: false
       });
 
       this.props.colorChange(this.state.color);
@@ -81,10 +86,14 @@ class Quotes extends Component {
       color: this.state.color
     };
 
-    return (
+    return this.state.isLoading ? (
+      <Loader color={this.state.color} />
+    ) : (
       <div>
-        <h2 style={textStyle}>{this.state.quoteText}</h2>
-        <p className="text-muted text-right">- {this.state.quoteAuthor}</p>
+        <div className="quoteCard">
+          <h2 style={textStyle}>{this.state.quoteText}</h2>
+          <p className="text-muted text-right">- {this.state.quoteAuthor}</p>
+        </div>
         <button
           onClick={this.generateQuote}
           className="button"

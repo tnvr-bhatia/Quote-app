@@ -4,6 +4,9 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
 }
 
 .quotebox {
@@ -12,7 +15,7 @@
   background-color: #ffffff;
   padding: 40px 50px;
   text-align: center;
-  height: max-content;
+  height: auto;
   box-sizing: border-box;
 }
 
