@@ -7,20 +7,24 @@
 }
 
 .quotebox {
-  width: 450px;
+  max-width: 400px;
+  width: 100%;
   background-color: #ffffff;
   padding: 40px 50px;
   text-align: center;
   height: max-content;
+  box-sizing: border-box;
 }
 
 .footer {
-  width: 450px;
+  max-width: 400px;
+  width: 100%;
   text-align: center;
   display: block;
-  margin: 15px auto 30px auto;
+  padding: 10px 50px;
   font-size: 0.8em;
   color: #fff;
+  box-sizing: border-box;
 }
 
 .text-normal {

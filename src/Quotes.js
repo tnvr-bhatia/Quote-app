@@ -25,7 +25,7 @@ class Quotes extends Component {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en",
+      "https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en",
       true
     );
 
@@ -61,7 +61,7 @@ class Quotes extends Component {
       var bgcolor = colors[Math.floor(Math.random() * colors.length)];
 
       this.setState({
-        quoteText: response.quoteText,
+        quoteText: response.quoteText.replace(/"/g, "'"),
         quoteAuthor: response.quoteAuthor || "Unknown",
         color: bgcolor
       });
