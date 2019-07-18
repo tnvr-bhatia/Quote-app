@@ -1,32 +1,31 @@
 import React, { Component } from "react";
 import "./App.css";
 import Quotes from "./Quotes";
+import { ThemeProvider, ThemeContext } from "./Theme";
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {
-      color: "#73a857"
-    };
-
-    this.colorChanger = this.colorChanger.bind(this);
-  }
-
-  colorChanger(color) {
-    this.setState({
-      color: color
-    });
   }
 
   render() {
     var backgroundStyle = {
-      backgroundColor: this.state.color
+      backgroundColor: this.props.color
     };
+
     return (
       <div className="App" style={backgroundStyle}>
         <div className="quotebox">
-          <Quotes colorChange={this.colorChanger} />
+          <ThemeContext.Consumer>
+            {context => {
+              return (
+                <Quotes
+                  color={context.color}
+                  themeChange={context.themeChange}
+                />
+              );
+            }}
+          </ThemeContext.Consumer>
         </div>
         <div className="footer">
           <span className="text-normal">by Tanveer</span>

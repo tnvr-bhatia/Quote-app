@@ -11,20 +11,20 @@ class Quotes extends Component {
 
     this.state = {
       isLoading: false,
-      quoteText: "We make our own fortunes and we call them fate.",
-      quoteAuthor: "Benjamin Disraeli",
-      color: "#73a857"
+      quoteText: "",
+      quoteAuthor: ""
     };
 
     this.processRequest = this.processRequest.bind(this);
     this.generateQuote = this.generateQuote.bind(this);
+    this.refreshQuote = this.refreshQuote.bind(this);
   }
 
   componentDidMount() {
-    //this.generateQuote();
+    this.generateQuote();
   }
 
-  generateQuote() {
+  generateQuote = () => {
     this.setState({ isLoading: true });
     xhr = new XMLHttpRequest();
     xhr.open(
@@ -40,54 +40,40 @@ class Quotes extends Component {
     xhr.send();
 
     xhr.addEventListener("readystatechange", this.processRequest, false);
-  }
+  };
 
   processRequest() {
-    var colors = [
-      "#16a085",
-      "#27ae60",
-      "#2c3e50",
-      "#f39c12",
-      "#e74c3c",
-      "#9b59b6",
-      "#FB6964",
-      "#342224",
-      "#472E32",
-      "#BDBB99",
-      "#77B1A9",
-      "#73A857"
-    ];
-
     if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log(xhr.responseText);
       var response = JSON.parse(xhr.responseText.replace(/'/g, '"'));
 
-      var bgcolor = colors[Math.floor(Math.random() * colors.length)];
+      //var bgcolor = colors[Math.floor(Math.random() * colors.length)];
 
       this.setState({
         quoteText: response.quoteText.replace(/"/g, "'"),
         quoteAuthor: response.quoteAuthor || "Unknown",
-        color: bgcolor,
         isLoading: false
       });
 
-      this.props.colorChange(this.state.color);
+      //this.props.colorChange(this.state.color);
     }
+  }
 
-    console.log(response);
+  refreshQuote() {
+    this.generateQuote();
+    this.props.themeChange();
   }
 
   render() {
     var backgroundStyle = {
-      backgroundColor: this.state.color
+      backgroundColor: this.props.color
     };
 
     var textStyle = {
-      color: this.state.color
+      color: this.props.color
     };
 
     return this.state.isLoading ? (
-      <Loader color={this.state.color} />
+      <Loader color={this.props.color} />
     ) : (
       <div>
         <div className="quoteCard">
@@ -95,7 +81,7 @@ class Quotes extends Component {
           <p className="text-muted text-right">- {this.state.quoteAuthor}</p>
         </div>
         <button
-          onClick={this.generateQuote}
+          onClick={this.refreshQuote}
           className="button"
           style={backgroundStyle}
         >
